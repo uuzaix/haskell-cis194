@@ -75,8 +75,13 @@ function whatWentWrong(logs) {
   return inOrder(build(logs.filter(l => l.LogMessage.type === "Error" && l.LogMessage.severity >= 50))).map(m => m.LogMessage.message)
 }
 
+function measureTime(data) {
+  const date = Date.now();
+  console.log("test whatWentWrong - \n", JSON.stringify(whatWentWrong(data), null, 2));
+  console.log(Date.now() - date);
+}
 
-readInput(data => console.log("test whatWentWrong - \n", JSON.stringify(whatWentWrong(data), null, 2)));
+readInput(measureTime);
 
 
 // tests

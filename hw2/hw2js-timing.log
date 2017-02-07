@@ -1,0 +1,19 @@
+5523 lines      real    0m0.181s
+                user    0m0.063s
+                sys     0m0.125s
+              
+5523 * 2        real    0m0.201s
+                user    0m0.125s
+                sys     0m0.078s
+
+5523 * 4        real    0m0.243s
+                user    0m0.172s
+                sys     0m0.109s
+
+5523 * 8        real    0m0.351s
+                user    0m0.219s
+                sys     0m0.094s
+
+5523 * 16       real    0m0.449s
+                user    0m0.281s
+                sys     0m0.109s

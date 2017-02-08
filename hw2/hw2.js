@@ -56,12 +56,19 @@ function insert(mes, tree) {
 
 // build:: [LogMessage] -> MessageTree
 function build(logs) {
-  if (logs.length === 0) {
-    return {}
-  } else {
-    return insert(logs[0], build(logs.slice(1, logs.length)))
-  }
+  return logs.reduce((tree, log) => {
+    return insert(log, tree)
+  }, {})
 }
+
+
+// function buildRecursion(logs) {
+//   if (logs.length === 0) {
+//     return {}
+//   } else {
+//     return insert(logs[0], build(logs.slice(1, logs.length)))
+//   }
+// }
 
 // inOrder:: MessageTree -> [LogMessage]
 function inOrder(tree) {
@@ -76,6 +83,5 @@ function inOrder(tree) {
 function whatWentWrong(logs) {
   return inOrder(build(logs.filter(l => l.LogMessage.type === "Error" && l.LogMessage.severity >= 50))).map(m => m.LogMessage.message)
 }
-
 
 readInput(data => console.log(JSON.stringify(whatWentWrong(data), null, 2)));

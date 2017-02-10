@@ -11,11 +11,10 @@ skips xs = map (\n -> (everyNth n xs)) [1..(length xs)]
 
 -- 2.
 localMaxima :: [Integer] -> [Integer]
-localMaxima [] = []
 localMaxima (x:y:z:xs) 
   | (y > z) && (y > x) = y : localMaxima (x:z:xs)
   | otherwise = localMaxima (x:z:xs)
-localMaxima (_:_) = []
+localMaxima _ = []
 
 -- 3.
 countN :: [Integer] -> Integer -> Int
@@ -28,4 +27,4 @@ produceStars :: [Int] ->[String]
 produceStars xs = map (\n -> (map (\x -> if x >= n then '*' else ' ') xs)) [1.. (maximum xs)]
 
 histogram :: [Integer] -> String
-histogram xs = unlines $ (reverse (produceStars (countAll xs))) ++ ["==========", "0123456789"]
+histogram xs = unlines $ (reverse (produceStars (countAllInt xs))) ++ ["==========", "0123456789"]

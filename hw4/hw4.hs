@@ -32,3 +32,14 @@ foldTree as = foldr insertNode Leaf as where
   insertNode a (Node n right@(Node y _ _ _) val left@(Node y' _ _ _)) = if y < y' 
                                                                           then Node (n + 1) (insertNode a right) val left
                                                                           else Node (n + 1) right val (insertNode a left)
+
+
+-- 3.
+xor :: [Bool] -> Bool
+xor bx = odd $ foldr countTrue 0 bx where
+  countTrue :: Bool -> Int -> Int
+  countTrue True n = n + 1
+  countTrue _ n = n
+
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\a b -> b ++ [f a]) []

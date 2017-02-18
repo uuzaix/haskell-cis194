@@ -41,5 +41,17 @@ xor bx = odd $ foldr countTrue 0 bx where
   countTrue True n = n + 1
   countTrue _ n = n
 
+xor' :: [Bool] -> Bool
+xor' bx = foldr check False bx where
+  check :: Bool -> Bool -> Bool
+  check a b 
+    | a == b = False
+    | otherwise = True  
+
+
 map' :: (a -> b) -> [a] -> [b]
-map' f = foldr (\a b -> b ++ [f a]) []
+-- map' f = foldr (\a b -> [f a] ++ b) []
+map' f = foldr (\a -> ([f a] ++)) []
+
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl f base xs = foldr (flip f) base (reverse xs)

@@ -51,7 +51,8 @@ xor' bx = foldr check False bx where
 
 map' :: (a -> b) -> [a] -> [b]
 -- map' f = foldr (\a b -> [f a] ++ b) []
-map' f = foldr (\a -> ([f a] ++)) []
+map' f = foldr (\a -> (f a :)) []
 
-myFoldl :: (a -> b -> a) -> a -> [b] -> a
-myFoldl f base xs = foldr (flip f) base (reverse xs)
+myFoldl :: (b -> a -> b) -> b -> [a] -> b
+-- myFoldl f base xs = foldr (flip f) base (reverse xs)
+myFoldl f base xs = foldr (\x b -> f b (foldr (flip f) x b)) xs base

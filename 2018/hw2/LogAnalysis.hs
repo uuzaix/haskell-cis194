@@ -2,6 +2,7 @@
 module LogAnalysis where
 import Log
 
+-- ex.1
 parseMessage :: String -> LogMessage
 -- parseMessage "E 2 562 help help" == LogMessage (Error 2) 562 "help help"
 -- parseMessage "I 29 la la la" == LogMessage Info 29 "la la la"
@@ -12,4 +13,10 @@ parseMessage message = case (words message) of
     "W":t:m -> LogMessage Warning (read t) (unwords m)
     "E":s:t:m -> LogMessage (Error (read s) ) (read t) (unwords m)
     _ -> Unknown message
+
+parse :: String -> [LogMessage]
+parse file = map parseMessage (lines file)
+
+
+
 

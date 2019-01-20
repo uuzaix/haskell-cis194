@@ -18,5 +18,22 @@ parse :: String -> [LogMessage]
 parse file = map parseMessage (lines file)
 
 
+-- ex.2
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown m) tree = tree
+insert m Leaf = Node Leaf m Leaf
+insert @new(LogMessage _ time1 _) (Node tree1 @old(LogMessage _ time2 _) tree2)
+    | time1 > time2  = Node tree1 old (insert new tree2)
+    | otherwise = Node (insert new tree1) old tree2
 
 
+-- ex.3
+build :: [LogMessage] -> MessageTree
+build [] = Leaf
+build (m:ms) = insert m (build ms)
+
+
+-- ex.4
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder (Node tree1 m tree2) = (inOrder tree1) ++ [m] ++ (inOrder tree2)

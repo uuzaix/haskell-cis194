@@ -22,7 +22,7 @@ parse file = map parseMessage (lines file)
 insert :: LogMessage -> MessageTree -> MessageTree
 insert (Unknown m) tree = tree
 insert m Leaf = Node Leaf m Leaf
-insert @new(LogMessage _ time1 _) (Node tree1 @old(LogMessage _ time2 _) tree2)
+insert new@(LogMessage _ time1 _) (Node tree1 old@(LogMessage _ time2 _) tree2)
     | time1 > time2  = Node tree1 old (insert new tree2)
     | otherwise = Node (insert new tree1) old tree2
 
@@ -37,3 +37,17 @@ build (m:ms) = insert m (build ms)
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
 inOrder (Node tree1 m tree2) = (inOrder tree1) ++ [m] ++ (inOrder tree2)
+
+
+-- ex.5
+whatWentWrong :: [LogMessage] -> [String]
+
+filterMessage :: LogMessage -> Bool
+filterMessage (LogMessage (Error s) _ _) = s >= 50
+filterMessage _ = False
+
+extractMessageText :: LogMessage -> String
+extractMessageText (LogMessage _ _ text) = text
+extractMessageText (Unknown text) = text
+
+whatWentWrong ms =  map extractMessageText (inOrder (build (filter filterMessage ms)))

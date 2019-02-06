@@ -29,5 +29,16 @@ localMaxima _ = []
 -- localMaxima [1,2,3,4,5] == []
 
 --ex.3
--- histogram :: [Integer] -> String
+countInt :: Integer -> [Integer] -> Int
+countInt n xs = length (filter (\x -> x == n) xs)
+
+countAllInt :: [Integer] -> [Int]
+countAllInt xs = map (\n -> countInt n xs ) [0..9]
+
+produceStars :: [Int] -> [String]
+produceStars xs = map (\n -> map (\x -> if x >= n then '*' else ' ') xs) [1..(maximum xs)]
+
+histogram :: [Integer] -> String
+histogram xs = unlines (reverse (produceStars (countAllInt xs)) ++ ["==========", "0123456789"])
+
 

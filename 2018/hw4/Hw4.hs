@@ -57,4 +57,20 @@ f n (Node x t1@(Node x1 t11 v1 t12) v t2@(Node x2 t21 v2 t22))
 --             (Node 0 Leaf 'D' Leaf)
 --             'E'
 --             Leaf))
+
+-- ex.3
+xor :: [Bool] -> Bool
+-- xor [False, True, False] == True
+-- xor [False, True, False, False, True] == False
+
+xor = foldr f False
+    where
+        f :: Bool -> Bool -> Bool
+        f a b = (a && not b) || (not a && b)
+
+
+map' :: (a -> b) -> [a] -> [b]
 -- foldr :: (a -> b -> b) -> b -> t a -> b
+map' f = foldr (\x acc-> (f x) : acc) []
+
+    

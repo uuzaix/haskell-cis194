@@ -73,4 +73,17 @@ map' :: (a -> b) -> [a] -> [b]
 -- foldr :: (a -> b -> b) -> b -> t a -> b
 map' f = foldr (\x acc-> (f x) : acc) []
 
-    
+-- ex.3 optional
+-- foldr f z [x1, x2, ..., xn] == x1 ‘f‘ (x2 ‘f‘ ... (xn ‘f‘ z)...)
+-- foldl f z [x1, x2, ..., xn] == (...((z ‘f‘ x1) ‘f‘ x2) ‘f‘...) ‘f‘ xn
+
+-- foldr :: (a -> b -> b) -> b -> t a -> b
+-- foldr f z [] = z
+-- foldr f z (x:xs) = f x (foldr f z xs)
+-- foldl :: (b -> a -> b) -> b -> t a -> b
+-- foldl f z [] = z
+-- foldl f z (x:xs) = foldl f (f z x) xs
+
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+-- myFoldl f base xs = foldr (flip f) base (reverse xs)
+myFoldl f base xs = (foldr (\x g b -> g(f b x)) (\x -> x) xs) base
